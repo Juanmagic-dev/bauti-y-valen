@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Las aventuras de Bauti y Valen</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e27">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bauti y Valen">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="ui">
+    <header id="titleBlock">
+      <h1 id="title">Las aventuras de Bauti y Valen</h1>
+      <p id="subtitle">Nivel 1 — El patio de los dulces</p>
+    </header>
+
+    <div id="hudPanel">
+      <div class="hudGroup" id="statsGroup">
+        <span class="statPill">🪙 <b id="chocoCount">0</b>/<b id="chocoTotal">0</b></span>
+      </div>
+
+      <div class="hudGroup" id="actionGroup">
+        <button id="restartBtn" class="iconBtn iconBtn--pink" title="Reiniciar nivel">🔄</button>
+        <div id="helpWrap" tabindex="0">
+          <button id="helpBtn" class="iconBtn iconBtn--gold" aria-label="Ayuda">❓</button>
+          <div id="helpTooltip">
+            <strong>Controles</strong>
+            <ul>
+              <li>⬅️➡️ Mover</li>
+              <li>⬆️ / Espacio: Saltar — Bauti: doble salto + vuelo (aleteo) tipo Flappy Bird</li>
+              <li>⬇️ / S: Agacharse (Valentina)</li>
+              <li>X: Disparar</li>
+              <li>C: Cambiar de personaje</li>
+              <li>T: Transformar — Valentina→Rumi, Bauti→Messi</li>
+              <li>R: Reiniciar nivel</li>
+            </ul>
+            <strong>Cuidado</strong>
+            <ul>
+              <li>Algunos enemigos disparan (esquivá o agachate)</li>
+              <li>Si Bauti se queda volando mucho tiempo, ¡pasan pájaros!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav id="levelSelect">
+      <button class="levelBtn" data-level="0">Nivel 1</button>
+      <button class="levelBtn" data-level="1">Nivel 2</button>
+      <button class="levelBtn" data-level="2">Nivel 3</button>
+      <button class="levelBtn" data-level="3">Nivel 4</button>
+    </nav>
+  </div>
+
+  <div id="gameWrap">
+    <canvas id="game" width="960" height="540"></canvas>
+
+    <div id="overlayLeft" class="gameOverlay">
+      <span id="charBadge">👧 Valentina</span>
+      <button id="switchCharBtn" class="iconBtn iconBtn--blue iconBtn--sm" title="Cambiar personaje (C)">🔀</button>
+      <button id="transformBtn" class="iconBtn iconBtn--purple iconBtn--sm" title="Transformarse (T)">✨</button>
+    </div>
+
+    <div id="overlayRight" class="gameOverlay">
+      <span id="livesDisplay">❤️❤️❤️</span>
+    </div>
+
+    <div id="touchControls">
+      <div id="touchLeft" class="touchGroup">
+        <button class="touchBtn" data-key="ArrowLeft" aria-label="Izquierda">⬅️</button>
+        <button class="touchBtn" data-key="ArrowDown" aria-label="Agacharse">⬇️</button>
+        <button class="touchBtn" data-key="ArrowRight" aria-label="Derecha">➡️</button>
+      </div>
+      <div id="touchRight" class="touchGroup">
+        <button class="touchBtn touchBtn--action" data-key="KeyX" aria-label="Disparar">💥</button>
+        <button class="touchBtn touchBtn--action touchBtn--jump" data-key="ArrowUp" aria-label="Saltar">⬆️</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="message" class="hidden">
+    <div id="messageText"></div>
+    <button id="nextLevelBtn" class="hidden">Siguiente nivel ▶</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
