@@ -18,6 +18,7 @@ const GRAVITY = 0.6;
 const JUMP_FORCE = -13;
 const DOUBLE_JUMP_FORCE = -11;
 const FLAP_FORCE = -7;
+const SKATEBOARD_SPEED_MULT = 1.7;
 const MOVE_SPEED = 4;
 const GROUND_Y = 460;
 const PROJECTILE_SPEED = 11;
@@ -318,6 +319,157 @@ const LEVELS = [
       { x: 2860, y: 380, text: '¡Transformate para el jefe! 🔥' },
     ],
   },
+  {
+    name: 'Nivel 5',
+    subtitle: 'El valle de las pirámides',
+    worldWidth: 4300,
+    startX: 50,
+    startY: GROUND_Y - 50,
+    theme: {
+      skyTop: '#ffb84d', skyMid: '#ffd98a', skyBottom: '#fff3d0',
+      farColor: '#c98a4d', midColor: '#e0b878',
+      groundTop: '#e8c98a', groundBottom: '#a8783f',
+      topStripTop: '#f0d9a0', topStripBottom: '#c9a05a', stripStyle: 'sand',
+      platformTop: '#e8c98a', platformBottom: '#a8783f', platformBorder: '#6b4a26',
+      glowColor: 'rgba(255,200,120,0.8)', lightColor: '#ffdb8a',
+      hazardFill: '#8a7050', hazardStroke: '#4a3520',
+      decoration: 'pyramids',
+      goalAccessory: 'pharaoh',
+    },
+    groundSegments: [
+      { x: 0, width: 430 }, { x: 510, width: 250 }, { x: 870, width: 280 },
+      { x: 1260, width: 290 }, { x: 1680, width: 270 }, { x: 2060, width: 290 },
+      { x: 2500, width: 300 }, { x: 2900, width: 300 }, { x: 3310, width: 340 },
+      { x: 3760, width: 540 },
+    ],
+    hazards: [
+      { x: 300, y: GROUND_Y - 16, width: 60, height: 16 },
+      { x: 1000, y: GROUND_Y - 16, width: 60, height: 16 },
+      { x: 2150, y: GROUND_Y - 16, width: 60, height: 16 },
+      { x: 3000, y: GROUND_Y - 16, width: 60, height: 16 },
+    ],
+    rollingHazards: [
+      { x: 600, y: GROUND_Y - 20, radius: 20, min: 540, max: 740, speed: 2.4, kind: 'boulder' },
+      { x: 3900, y: GROUND_Y - 22, radius: 22, min: 3800, max: 4200, speed: 3.2, kind: 'boulder' },
+    ],
+    platforms: [
+      { x: 950, y: 340, width: 100, height: 20, type: 'static' },
+      { x: 1560, y: 400, width: 90, height: 20, type: 'moving', axis: 'x', min: 1555, max: 1665, speed: 1.4, dir: 1 },
+      { x: 1750, y: 320, width: 110, height: 20, type: 'static' },
+      { x: 2365, y: 400, width: 55, height: 18, type: 'crumble' },
+      { x: 2430, y: 400, width: 55, height: 18, type: 'crumble' },
+      { x: 2495, y: 400, width: 55, height: 18, type: 'crumble' },
+      { x: 3450, y: 240, width: 90, height: 20, type: 'moving', axis: 'y', min: 240, max: 420, speed: 1.3, dir: 1 },
+      { x: 3350, y: 220, width: 160, height: 20, type: 'static' },
+    ],
+    skateboardSpots: [
+      [1500, 400],
+      [3380, 190],
+    ],
+    chocolateSpots: [
+      [150, 400], [200, 400], [250, 400],
+      [560, 400], [700, 400],
+      [950, 300], [1050, 300],
+      [1300, 400], [1380, 400],
+      [1720, 280], [1800, 280],
+      [2100, 400], [2180, 400],
+      [2380, 360], [2440, 360], [2500, 360],
+      [2600, 400], [2700, 400],
+      [2950, 400], [3050, 400], [3150, 400],
+      [3400, 190], [3430, 190],
+      [3500, 400],
+      [3820, 400], [3900, 400], [4000, 400], [4100, 400], [4200, 400],
+    ],
+    enemyDefs: [
+      { type: 'broccoli', skin: 'scarab', x: 650, y: GROUND_Y - 30, minX: 600, maxX: 750, speed: 2.2 },
+      { type: 'penguin', skin: 'mummy', x: 1000, y: GROUND_Y - 30, minX: 920, maxX: 1130, speed: 1.4 },
+      { type: 'superBroccoli', skin: 'sarcophagusGuardian', x: 1780, y: GROUND_Y - 42, minX: 1710, maxX: 1930, speed: 1.8, hp: 2, shooter: true, shootInterval: 140, shootSpeed: 5, shootTimer: 50 },
+      { type: 'broccoli', skin: 'scarab', x: 2150, y: GROUND_Y - 30, minX: 2090, maxX: 2330, speed: 2.4 },
+      { type: 'wasp', skin: 'scarabFly', x: 2650, y: 300, minX: 2550, maxX: 2780, speed: 2.0, baseY: 300, amplitude: 70, shooter: true, shootInterval: 130, shootSpeed: 6, shootTimer: 60 },
+      { type: 'keeper', skin: 'anubisGuardian', x: 3050, y: GROUND_Y - 42, minX: 2960, maxX: 3180, speed: 1.8, hp: 3, boss: true, shooter: true, shootInterval: 90, shootSpeed: 6, shootTimer: 40 },
+      { type: 'penguin', skin: 'mummy', x: 3450, y: GROUND_Y - 30, minX: 3350, maxX: 3600, speed: 1.6 },
+    ],
+    goal: { x: 4230, y: GROUND_Y - 70, width: 50, height: 70 },
+    hints: [
+      { x: 60, y: 380, text: '🛹 = Patineta: más veloz, un golpe gratis' },
+      { x: 1520, y: 370, text: '¡Usá la plataforma flotante!' },
+      { x: 3790, y: 380, text: '¡Corre, viene la roca! 🪨' },
+    ],
+  },
+  {
+    name: 'Nivel 6',
+    subtitle: 'El recital de las Kpops',
+    worldWidth: 4300,
+    startX: 50,
+    startY: GROUND_Y - 50,
+    theme: {
+      skyTop: '#1a0a2e', skyMid: '#3a1a52', skyBottom: '#6a2a6a',
+      farColor: '#2a1440', midColor: '#4a2060',
+      groundTop: '#2a2a35', groundBottom: '#101018',
+      topStripTop: '#1a1a24', topStripBottom: '#0a0a10', stripStyle: 'stage',
+      platformTop: '#3a1a5a', platformBottom: '#1a0a30', platformBorder: '#0cfaf0',
+      glowColor: 'rgba(255,0,110,0.7)', lightColor: '#ff4fa8',
+      hazardFill: '#5a5a68', hazardStroke: '#2a2a30',
+      decoration: 'concertLights',
+      goalAccessory: 'rockstar',
+    },
+    groundSegments: [
+      { x: 0, width: 430 }, { x: 510, width: 250 }, { x: 870, width: 280 },
+      { x: 1260, width: 290 }, { x: 1680, width: 270 }, { x: 2060, width: 290 },
+      { x: 2500, width: 300 }, { x: 2900, width: 300 }, { x: 3310, width: 340 },
+      { x: 3760, width: 540 },
+    ],
+    hazards: [
+      { x: 300, y: GROUND_Y - 16, width: 60, height: 16 },
+      { x: 1000, y: GROUND_Y - 16, width: 60, height: 16 },
+      { x: 2150, y: GROUND_Y - 16, width: 60, height: 16 },
+      { x: 3000, y: GROUND_Y - 16, width: 60, height: 16 },
+    ],
+    rollingHazards: [
+      { x: 650, y: GROUND_Y - 18, radius: 18, min: 580, max: 740, speed: 2.3, kind: 'beachball' },
+      { x: 2600, y: GROUND_Y - 18, radius: 18, min: 2550, max: 2750, speed: 2.6, kind: 'beachball' },
+      { x: 3900, y: GROUND_Y - 20, radius: 20, min: 3800, max: 4200, speed: 2.8, kind: 'beachball' },
+    ],
+    platforms: [
+      { x: 950, y: 340, width: 100, height: 20, type: 'static' },
+      { x: 1560, y: 400, width: 90, height: 20, type: 'moving', axis: 'x', min: 1555, max: 1665, speed: 1.4, dir: 1 },
+      { x: 1750, y: 320, width: 110, height: 20, type: 'static' },
+      { x: 2365, y: 400, width: 55, height: 18, type: 'crumble' },
+      { x: 2430, y: 400, width: 55, height: 18, type: 'crumble' },
+      { x: 2495, y: 400, width: 55, height: 18, type: 'crumble' },
+      { x: 3450, y: 240, width: 90, height: 20, type: 'moving', axis: 'y', min: 240, max: 420, speed: 1.3, dir: 1 },
+      { x: 3350, y: 220, width: 160, height: 20, type: 'static' },
+    ],
+    chocolateSpots: [
+      [150, 400], [200, 400], [250, 400],
+      [560, 400], [700, 400],
+      [950, 300], [1050, 300],
+      [1300, 400], [1380, 400],
+      [1720, 280], [1800, 280],
+      [2100, 400], [2180, 400],
+      [2380, 360], [2440, 360], [2500, 360],
+      [2600, 400], [2700, 400],
+      [2950, 400], [3050, 400], [3150, 400],
+      [3400, 190], [3430, 190],
+      [3500, 400],
+      [3820, 400], [3900, 400], [4000, 400], [4100, 400], [4200, 400],
+    ],
+    enemyDefs: [
+      { type: 'broccoli', skin: 'ampGremlin', x: 650, y: GROUND_Y - 30, minX: 600, maxX: 750, speed: 2.2 },
+      { type: 'penguin', skin: 'roadie', x: 1000, y: GROUND_Y - 30, minX: 920, maxX: 1130, speed: 1.5 },
+      { type: 'superBroccoli', skin: 'speakerStack', x: 1780, y: GROUND_Y - 42, minX: 1710, maxX: 1930, speed: 1.8, hp: 2, shooter: true, shootInterval: 140, shootSpeed: 5, shootTimer: 50 },
+      { type: 'broccoli', skin: 'ampGremlin', x: 2150, y: GROUND_Y - 30, minX: 2090, maxX: 2330, speed: 2.4 },
+      { type: 'wasp', skin: 'discoFly', x: 2650, y: 300, minX: 2550, maxX: 2780, speed: 2.0, baseY: 300, amplitude: 70, shooter: true, shootInterval: 130, shootSpeed: 6, shootTimer: 60 },
+      { type: 'keeper', skin: 'djBoss', x: 3050, y: GROUND_Y - 42, minX: 2960, maxX: 3180, speed: 1.8, hp: 3, boss: true, shooter: true, shootInterval: 90, shootSpeed: 6, shootTimer: 40 },
+      { type: 'penguin', skin: 'roadie', x: 3450, y: GROUND_Y - 30, minX: 3350, maxX: 3600, speed: 1.6 },
+    ],
+    goal: { x: 4230, y: GROUND_Y - 70, width: 50, height: 70 },
+    hints: [
+      { x: 60, y: 380, text: 'C = Personaje, T = Transformar' },
+      { x: 1520, y: 370, text: '¡Subite al elevador de parlantes!' },
+      { x: 2870, y: 380, text: '¡Transformate para el DJ! 🎧' },
+    ],
+  },
 ];
 
 // =====================================================
@@ -337,6 +489,8 @@ let rollingHazards = [];
 let birds = [];
 let flightFrames = 0;
 const BIRD_INTERVAL = 150; // ~2.5s de vuelo continuo entre pájaros
+let skateboards = [];
+let skateboardMusicTimer = null;
 
 const player = {
   x: 50, y: GROUND_Y - 50,
@@ -353,6 +507,7 @@ const player = {
   transformed: false,
   ducking: false,
   jumpsUsed: 0,
+  hasSkateboard: false,
 };
 
 let playerProjectiles = [];
@@ -411,6 +566,11 @@ const sfx = {
     playBeep({ freq: 1500, freqEnd: 1900, duration: 0.08, type: 'sine', volume: 0.1, delay: 0.06 });
   },
   flap: () => playBeep({ freq: 420, freqEnd: 600, duration: 0.08, type: 'sine', volume: 0.09 }),
+  skateboardGet: () => {
+    playBeep({ freq: 300, freqEnd: 700, duration: 0.15, type: 'square', volume: 0.16 });
+    playBeep({ freq: 700, freqEnd: 1000, duration: 0.1, type: 'triangle', volume: 0.12, delay: 0.1 });
+  },
+  skateboardLose: () => playBeep({ freq: 250, freqEnd: 80, duration: 0.25, type: 'sawtooth', volume: 0.18 }),
   birdCry: () => {
     playBeep({ freq: 1400, freqEnd: 1800, duration: 0.07, type: 'triangle', volume: 0.13 });
     playBeep({ freq: 1300, freqEnd: 1700, duration: 0.07, type: 'triangle', volume: 0.1, delay: 0.09 });
@@ -464,6 +624,7 @@ function loadLevel(index) {
     charging: false,
   }));
   goal = { ...level.goal };
+  skateboards = (level.skateboardSpots || []).map(([x, y]) => ({ x, y, width: 26, height: 16, collected: false, bob: Math.random() * Math.PI * 2 }));
 
   playerProjectiles = [];
   enemyProjectiles = [];
@@ -476,6 +637,8 @@ function loadLevel(index) {
   player.height = STAND_HEIGHT;
   player.jumpsUsed = 0;
   player.transformed = false;
+  player.hasSkateboard = false;
+  stopSkateboardMusic();
   gameOver = false;
   levelComplete = false;
   resetPlayer(false);
@@ -490,6 +653,7 @@ function setCharacter(name) {
   if (player.character === name) return;
   player.character = name;
   player.transformed = false;
+  if (player.hasSkateboard) loseSkateboard();
   if (!ABILITIES[name].canDuck && player.ducking) {
     player.ducking = false;
     player.y -= (STAND_HEIGHT - DUCK_HEIGHT);
@@ -563,15 +727,56 @@ function resetPlayer(keepInvuln = true) {
 
 function loseLife() {
   if (player.invulnerable > 0) return;
+  if (player.hasSkateboard) {
+    loseSkateboard();
+    player.invulnerable = 40;
+    return;
+  }
   loseLifeNow();
 }
 
 // Caerse a un pozo siempre debe costar una vida y reubicar al jugador,
 // aunque tenga una invulnerabilidad breve activa de un golpe anterior
 // (si no, se queda cayendo fuera de pantalla sin reaccionar hasta que
-// esa invulnerabilidad expire, lo que parecía "no perder vida").
+// esa invulnerabilidad expire, lo que parecía "no perder vida"). La
+// patineta no protege de caer al vacío, solo de golpes de enemigos.
 function fallIntoVoid() {
+  if (player.hasSkateboard) loseSkateboard();
   loseLifeNow();
+}
+
+function pickUpSkateboard() {
+  player.hasSkateboard = true;
+  sfx.skateboardGet();
+  spawnParticles(player.x + player.width / 2, player.y + player.height, '#ff8c1a', 10, { spread: 5, power: 4, size: 3 });
+  startSkateboardMusic();
+  updateHUD();
+}
+
+function loseSkateboard() {
+  player.hasSkateboard = false;
+  sfx.skateboardLose();
+  spawnParticles(player.x + player.width / 2, player.y + player.height, '#8a5a2b', 10, { spread: 5, power: 4, size: 3 });
+  stopSkateboardMusic();
+  updateHUD();
+}
+
+function startSkateboardMusic() {
+  if (skateboardMusicTimer || !audioCtx) return;
+  const riff = [392, 440, 494, 440, 523, 466, 440, 392];
+  let step = 0;
+  skateboardMusicTimer = setInterval(() => {
+    playBeep({ freq: riff[step % riff.length], duration: 0.1, type: 'square', volume: 0.07 });
+    if (step % 4 === 0) playBeep({ freq: riff[step % riff.length] / 2, duration: 0.15, type: 'triangle', volume: 0.06 });
+    step++;
+  }, 120);
+}
+
+function stopSkateboardMusic() {
+  if (skateboardMusicTimer) {
+    clearInterval(skateboardMusicTimer);
+    skateboardMusicTimer = null;
+  }
 }
 
 function loseLifeNow() {
@@ -591,7 +796,7 @@ function updateHUD() {
   chocoCountEl.textContent = chocolates.filter(c => c.collected).length;
   livesEl.textContent = '❤️'.repeat(Math.max(player.lives, 0));
   const def = getCharDef();
-  charBadgeEl.textContent = `${def.emoji} ${def.label}`;
+  charBadgeEl.textContent = `${def.emoji} ${def.label}${player.hasSkateboard ? ' 🛹' : ''}`;
 }
 
 function showMessage(text, showNext) {
@@ -784,13 +989,14 @@ function update() {
   }
 
   // Movimiento horizontal
+  const moveSpeed = MOVE_SPEED * (player.hasSkateboard ? SKATEBOARD_SPEED_MULT : 1);
   let targetVx = 0;
   if (!player.ducking) {
     if (keys['ArrowLeft'] || keys['KeyA']) {
-      targetVx = -MOVE_SPEED;
+      targetVx = -moveSpeed;
       player.facing = -1;
     } else if (keys['ArrowRight'] || keys['KeyD']) {
-      targetVx = MOVE_SPEED;
+      targetVx = moveSpeed;
       player.facing = 1;
     }
   }
@@ -953,6 +1159,14 @@ function update() {
     }
   }
 
+  // Patinetas
+  for (const sk of skateboards) {
+    if (!sk.collected && !player.hasSkateboard && aabb(player, sk)) {
+      sk.collected = true;
+      pickUpSkateboard();
+    }
+  }
+
   // Proyectiles del jugador: movimiento y colisión con enemigos
   for (let i = playerProjectiles.length - 1; i >= 0; i--) {
     const s = playerProjectiles[i];
@@ -1038,6 +1252,7 @@ function update() {
   // Meta
   if (aabb(player, goal)) {
     levelComplete = true;
+    stopSkateboardMusic();
     sfx.victory();
     const hasNext = currentLevelIndex < LEVELS.length - 1;
     const text = hasNext
@@ -1161,6 +1376,46 @@ function buildIcePattern(topColor, bottomColor) {
   });
 }
 
+function buildSandPattern(topColor, bottomColor) {
+  return makePatternCanvas(46, 20, (c2, w, h) => {
+    const grad = c2.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, topColor);
+    grad.addColorStop(1, bottomColor);
+    c2.fillStyle = grad;
+    c2.fillRect(0, 0, w, h);
+    c2.strokeStyle = 'rgba(140,100,40,0.3)';
+    c2.lineWidth = 1;
+    c2.beginPath();
+    c2.moveTo(0, h * 0.6); c2.quadraticCurveTo(w * 0.5, h * 0.3, w, h * 0.6);
+    c2.stroke();
+    c2.fillStyle = 'rgba(120,80,20,0.3)';
+    for (let i = 0; i < 12; i++) {
+      const px = Math.random() * w, py = Math.random() * h, r = 0.6 + Math.random() * 1.2;
+      c2.beginPath(); c2.arc(px, py, r, 0, Math.PI * 2); c2.fill();
+    }
+    c2.fillStyle = 'rgba(255,240,200,0.4)';
+    for (let i = 0; i < 8; i++) {
+      const px = Math.random() * w, py = Math.random() * h * 0.6, r = 0.5 + Math.random();
+      c2.beginPath(); c2.arc(px, py, r, 0, Math.PI * 2); c2.fill();
+    }
+  });
+}
+
+function buildStagePattern(topColor, bottomColor, glowColor) {
+  return makePatternCanvas(60, 20, (c2, w, h) => {
+    const grad = c2.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, topColor);
+    grad.addColorStop(1, bottomColor);
+    c2.fillStyle = grad;
+    c2.fillRect(0, 0, w, h);
+    c2.fillStyle = 'rgba(0,0,0,0.25)';
+    c2.fillRect(w * 0.48, 0, w * 0.04, h);
+    c2.fillStyle = glowColor || 'rgba(12,250,240,0.8)';
+    c2.fillRect(w * 0.485, 0, w * 0.03, h * 0.35);
+    c2.fillRect(w * 0.485, h * 0.65, w * 0.03, h * 0.35);
+  });
+}
+
 function buildSkyNoisePattern() {
   return makePatternCanvas(120, 120, (c2, w, h) => {
     c2.fillStyle = 'rgba(255,255,255,0.07)';
@@ -1183,6 +1438,10 @@ function ensureThemePatterns(th) {
     patterns.top = buildIcePattern(th.topStripTop, th.topStripBottom);
   } else if (th.stripStyle === 'pitch') {
     patterns.top = buildGrassPattern(th.topStripTop, th.topStripBottom, 'rgba(255,255,255,0.3)');
+  } else if (th.stripStyle === 'sand') {
+    patterns.top = buildSandPattern(th.topStripTop, th.topStripBottom);
+  } else if (th.stripStyle === 'stage') {
+    patterns.top = buildStagePattern(th.topStripTop, th.topStripBottom, th.glowColor);
   } else if (th.stripStyle !== 'belt') {
     patterns.top = buildGrassPattern(th.topStripTop, th.topStripBottom, th.topStripBottom);
   }
@@ -1230,12 +1489,61 @@ function drawBackground() {
   ctx.fillStyle = th.midColor;
   drawParallaxRange(0.18, 260, 40);
 
+  if (th.decoration === 'pyramids') drawPyramids();
+  else if (th.decoration === 'concertLights') drawConcertLights();
+
   ctx.fillStyle = 'rgba(255,255,255,0.55)';
   for (let i = 0; i < 9; i++) {
     const worldX = i * 420;
     const sx = worldX - cameraX * 0.4;
     const wrapped = ((sx % (canvas.width + 400)) + (canvas.width + 400)) % (canvas.width + 400) - 200;
     drawCloud(wrapped, 55 + (i % 3) * 45);
+  }
+}
+
+function drawPyramids() {
+  const positions = [300, 1100, 1900, 2700, 3500, 4300];
+  ctx.fillStyle = 'rgba(120,80,40,0.55)';
+  for (const wx of positions) {
+    const sx = wx - cameraX * 0.12;
+    if (sx < -200 || sx > canvas.width + 200) continue;
+    ctx.beginPath();
+    ctx.moveTo(sx - 80, 420);
+    ctx.lineTo(sx, 220);
+    ctx.lineTo(sx + 80, 420);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = 'rgba(90,60,30,0.5)';
+    ctx.beginPath();
+    ctx.moveTo(sx, 220);
+    ctx.lineTo(sx + 80, 420);
+    ctx.lineTo(sx + 30, 420);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = 'rgba(120,80,40,0.55)';
+  }
+}
+
+function drawConcertLights() {
+  ctx.fillStyle = 'rgba(10,10,20,0.5)';
+  ctx.fillRect(0, 18, canvas.width, 8);
+  const beamColors = ['rgba(0,212,255,0.16)', 'rgba(255,0,110,0.16)', 'rgba(123,47,190,0.16)', 'rgba(255,214,92,0.14)'];
+  for (let i = 0; i < 4; i++) {
+    const bx = (canvas.width / 5) * (i + 1);
+    ctx.fillStyle = beamColors[i % beamColors.length];
+    ctx.beginPath();
+    ctx.moveTo(bx - 5, 26);
+    ctx.lineTo(bx - 85, 420);
+    ctx.lineTo(bx + 85, 420);
+    ctx.lineTo(bx + 5, 26);
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.fillStyle = '#0a0a12';
+  for (let i = 0; i < 6; i++) {
+    ctx.beginPath();
+    ctx.arc((canvas.width / 6) * i + 40, 22, 5, 0, Math.PI * 2);
+    ctx.fill();
   }
 }
 
@@ -1296,6 +1604,12 @@ function drawGround() {
     } else if (th.stripStyle === 'ice') {
       ctx.fillStyle = patterns.top;
       ctx.fillRect(sx, GROUND_Y, seg.width, 20);
+    } else if (th.stripStyle === 'sand') {
+      ctx.fillStyle = patterns.top;
+      ctx.fillRect(sx, GROUND_Y, seg.width, 20);
+    } else if (th.stripStyle === 'stage') {
+      ctx.fillStyle = patterns.top;
+      ctx.fillRect(sx, GROUND_Y, seg.width, 16);
     } else {
       ctx.fillStyle = patterns.top;
       ctx.fillRect(sx, GROUND_Y, seg.width, 18);
@@ -1355,19 +1669,61 @@ function drawRollingHazards() {
     ctx.save();
     ctx.translate(sx, b.y);
     ctx.rotate(frameCount * 0.15 * b.dir);
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath();
-    ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = '#333';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.fillStyle = '#222';
-    for (let i = 0; i < 5; i++) {
-      const ang = (i / 5) * Math.PI * 2;
+
+    if (b.kind === 'boulder') {
+      const grad = ctx.createRadialGradient(-b.radius * 0.3, -b.radius * 0.3, 2, 0, 0, b.radius);
+      grad.addColorStop(0, '#c9a878');
+      grad.addColorStop(1, '#7a5a38');
+      ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.arc(Math.cos(ang) * b.radius * 0.5, Math.sin(ang) * b.radius * 0.5, b.radius * 0.28, 0, Math.PI * 2);
+      ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
       ctx.fill();
+      ctx.strokeStyle = '#4a3520';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(74,53,32,0.6)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 4; i++) {
+        const ang = (i / 4) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(ang) * b.radius * 0.3, Math.sin(ang) * b.radius * 0.3);
+        ctx.lineTo(Math.cos(ang) * b.radius * 0.9, Math.sin(ang) * b.radius * 0.9);
+        ctx.stroke();
+      }
+    } else if (b.kind === 'beachball') {
+      const colors = ['#ff5f57', '#ffe066', '#4de0ff', '#7ee06a'];
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
+      ctx.fill();
+      for (let i = 0; i < 4; i++) {
+        ctx.fillStyle = colors[i];
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, b.radius, (i / 4) * Math.PI * 2, ((i + 0.5) / 4) * Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.fillStyle = '#222';
+      for (let i = 0; i < 5; i++) {
+        const ang = (i / 5) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.arc(Math.cos(ang) * b.radius * 0.5, Math.sin(ang) * b.radius * 0.5, b.radius * 0.28, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
     ctx.restore();
   }
@@ -1465,6 +1821,43 @@ function drawChocolates() {
   }
 }
 
+function drawSkateboards() {
+  for (const sk of skateboards) {
+    if (sk.collected) continue;
+    const sx = sk.x - cameraX;
+    if (sx < -30 || sx > canvas.width + 30) continue;
+    const bobY = sk.y + Math.sin(frameCount * 0.08 + sk.bob) * 4;
+
+    ctx.fillStyle = 'rgba(0,0,0,0.15)';
+    ctx.beginPath();
+    ctx.ellipse(sx + sk.width / 2, sk.y + sk.height + 12, 12, 3, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    drawSkateboardIcon(sx, bobY, sk.width, sk.height, true);
+  }
+}
+
+function drawSkateboardIcon(sx, sy, w, h, glow) {
+  if (glow) {
+    ctx.fillStyle = 'rgba(255,140,26,0.35)';
+    ctx.beginPath();
+    ctx.ellipse(sx + w / 2, sy + h / 2, w * 0.9, h * 1.6, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  const deckGrad = ctx.createLinearGradient(sx, sy, sx + w, sy);
+  deckGrad.addColorStop(0, '#ff5f57');
+  deckGrad.addColorStop(0.5, '#ffb020');
+  deckGrad.addColorStop(1, '#ff5f57');
+  ctx.fillStyle = deckGrad;
+  roundRect(sx, sy + h * 0.3, w, h * 0.4, h * 0.2);
+  ctx.fill();
+  ctx.fillStyle = '#2b2b2b';
+  ctx.beginPath();
+  ctx.arc(sx + w * 0.18, sy + h * 0.85, h * 0.22, 0, Math.PI * 2);
+  ctx.arc(sx + w * 0.82, sy + h * 0.85, h * 0.22, 0, Math.PI * 2);
+  ctx.fill();
+}
+
 function drawHints() {
   ctx.font = '13px sans-serif';
   ctx.textAlign = 'center';
@@ -1534,24 +1927,31 @@ function drawEnemies() {
   }
 }
 
+const ROUND_ENEMY_PALETTES = {
+  default: { c1: '#7ee06a', c2: '#2f7d2f', dot: 'rgba(0,90,0,0.35)', outline: '#123d12', crown: false },
+  super: { c1: '#a97ee0', c2: '#4a2f7d', dot: 'rgba(60,0,90,0.35)', outline: '#2a1a4a', crown: false },
+  scarab: { c1: '#4a4a52', c2: '#0d0d10', dot: 'rgba(255,215,0,0.55)', outline: '#000000', crown: false },
+  sarcophagusGuardian: { c1: '#e8c96a', c2: '#8a6a1f', dot: 'rgba(90,50,0,0.35)', outline: '#4a3210', crown: true },
+  ampGremlin: { c1: '#ff6fd8', c2: '#a020a0', dot: 'rgba(255,255,255,0.35)', outline: '#4a0a4a', crown: false },
+  speakerStack: { c1: '#6a3ad0', c2: '#2a1060', dot: 'rgba(255,255,255,0.3)', outline: '#0a0530', crown: false },
+};
+
 function drawBroccoli(sx, en, cx, cy, flashing, isSuper) {
+  const palette = ROUND_ENEMY_PALETTES[en.skin] || (isSuper ? ROUND_ENEMY_PALETTES.super : ROUND_ENEMY_PALETTES.default);
   const grad = ctx.createRadialGradient(cx - 6, cy - 6, 3, cx, cy, en.width / 2 + 4);
   if (flashing) {
     grad.addColorStop(0, '#ffffff');
     grad.addColorStop(1, '#cfcfcf');
-  } else if (isSuper) {
-    grad.addColorStop(0, '#a97ee0');
-    grad.addColorStop(1, '#4a2f7d');
   } else {
-    grad.addColorStop(0, '#7ee06a');
-    grad.addColorStop(1, '#2f7d2f');
+    grad.addColorStop(0, palette.c1);
+    grad.addColorStop(1, palette.c2);
   }
   ctx.fillStyle = grad;
   ctx.beginPath();
   ctx.arc(cx, cy, en.width / 2, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = isSuper ? 'rgba(60,0,90,0.35)' : 'rgba(0,90,0,0.35)';
+  ctx.fillStyle = palette.dot;
   for (let i = 0; i < 6; i++) {
     const ang = (i / 6) * Math.PI * 2;
     ctx.beginPath();
@@ -1560,21 +1960,23 @@ function drawBroccoli(sx, en, cx, cy, flashing, isSuper) {
   }
 
   if (isSuper) {
-    ctx.fillStyle = '#ffd43b';
-    ctx.beginPath();
-    ctx.moveTo(cx - 10, en.y - 2);
-    ctx.lineTo(cx - 4, en.y - 12);
-    ctx.lineTo(cx, en.y - 2);
-    ctx.lineTo(cx + 4, en.y - 12);
-    ctx.lineTo(cx + 10, en.y - 2);
-    ctx.closePath();
-    ctx.fill();
+    if (palette.crown) {
+      ctx.fillStyle = '#ffd43b';
+      ctx.beginPath();
+      ctx.moveTo(cx - 10, en.y - 2);
+      ctx.lineTo(cx - 4, en.y - 12);
+      ctx.lineTo(cx, en.y - 2);
+      ctx.lineTo(cx + 4, en.y - 12);
+      ctx.lineTo(cx + 10, en.y - 2);
+      ctx.closePath();
+      ctx.fill();
+    }
     ctx.fillStyle = '#3a2540';
     ctx.font = '10px sans-serif';
     ctx.fillText('HP ' + en.hp, cx - 12, en.y + en.height + 14);
   }
 
-  ctx.strokeStyle = isSuper ? '#2a1a4a' : '#123d12';
+  ctx.strokeStyle = palette.outline;
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(cx - en.width * 0.33, cy - en.height * 0.13);
@@ -1591,10 +1993,17 @@ function drawBroccoli(sx, en, cx, cy, flashing, isSuper) {
   ctx.fillRect(sx + en.width * 0.67, en.y + en.height * 0.33, en.width * 0.1, en.width * 0.1);
 }
 
+const WASP_PALETTES = {
+  default: { c1: '#ffd43b', c2: '#e8890b', stripe: '#2b1a05', wing: 'rgba(255,255,255,0.5)' },
+  scarabFly: { c1: '#8fe0a0', c2: '#1a6b3a', stripe: '#0a3a1a', wing: 'rgba(255,215,120,0.5)' },
+  discoFly: { c1: '#e8eaff', c2: '#8a8ec9', stripe: '#4a3a8a', wing: 'rgba(255,120,220,0.55)' },
+};
+
 function drawWasp(sx, en, cx, cy, flashing) {
+  const palette = WASP_PALETTES[en.skin] || WASP_PALETTES.default;
   const wingFlap = Math.sin(frameCount * 0.6) * 8;
 
-  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.fillStyle = palette.wing;
   ctx.beginPath();
   ctx.ellipse(cx - 6, cy - 4 + wingFlap * 0.2, 10, 5, 0.4, 0, Math.PI * 2);
   ctx.ellipse(cx + 6, cy - 4 - wingFlap * 0.2, 10, 5, -0.4, 0, Math.PI * 2);
@@ -1605,17 +2014,28 @@ function drawWasp(sx, en, cx, cy, flashing) {
     grad.addColorStop(0, '#ffffff');
     grad.addColorStop(1, '#dddddd');
   } else {
-    grad.addColorStop(0, '#ffd43b');
-    grad.addColorStop(1, '#e8890b');
+    grad.addColorStop(0, palette.c1);
+    grad.addColorStop(1, palette.c2);
   }
   ctx.fillStyle = grad;
   ctx.beginPath();
   ctx.ellipse(cx, cy, en.width / 2, en.height / 2.6, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = '#2b1a05';
-  ctx.fillRect(sx + en.width * 0.1, cy - 4, en.width * 0.8, 4);
-  ctx.fillRect(sx + en.width * 0.35, cy + 2, en.width * 0.3, 4);
+  if (en.skin === 'discoFly') {
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = 1;
+    for (let i = -1; i <= 1; i++) {
+      ctx.beginPath();
+      ctx.moveTo(cx + i * en.width * 0.25, cy - en.height * 0.3);
+      ctx.lineTo(cx + i * en.width * 0.25, cy + en.height * 0.3);
+      ctx.stroke();
+    }
+  } else {
+    ctx.fillStyle = palette.stripe;
+    ctx.fillRect(sx + en.width * 0.1, cy - 4, en.width * 0.8, 4);
+    ctx.fillRect(sx + en.width * 0.35, cy + 2, en.width * 0.3, 4);
+  }
 
   ctx.fillStyle = 'black';
   ctx.beginPath();
@@ -1630,37 +2050,60 @@ function drawWasp(sx, en, cx, cy, flashing) {
   ctx.stroke();
 }
 
+const HUMANOID_PALETTES = {
+  default: { c1: '#3a3a4a', c2: '#15151f', belly: '#f2f2f2', beak: '#f5a623' },
+  mummy: { c1: '#d9c9a0', c2: '#a89468', belly: '#efe4c4', beak: '#8a6a3f' },
+  roadie: { c1: '#2a2a2e', c2: '#0a0a0c', belly: '#4a4a52', beak: '#1a1a1c' },
+};
+
 function drawPenguin(sx, en, cx, cy, flashing) {
+  const palette = HUMANOID_PALETTES[en.skin] || HUMANOID_PALETTES.default;
   const grad = ctx.createLinearGradient(sx, en.y, sx, en.y + en.height);
   if (flashing) {
     grad.addColorStop(0, '#ffffff');
     grad.addColorStop(1, '#dddddd');
   } else {
-    grad.addColorStop(0, '#3a3a4a');
-    grad.addColorStop(1, '#15151f');
+    grad.addColorStop(0, palette.c1);
+    grad.addColorStop(1, palette.c2);
   }
   ctx.fillStyle = grad;
   ctx.beginPath();
   ctx.ellipse(cx, cy, en.width / 2.4, en.height / 2, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = flashing ? '#eee' : '#f2f2f2';
+  ctx.fillStyle = flashing ? '#eee' : palette.belly;
   ctx.beginPath();
   ctx.ellipse(cx, cy + en.height * 0.12, en.width / 3.6, en.height / 2.8, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = '#f5a623';
-  ctx.beginPath();
-  ctx.moveTo(cx + (en.dir >= 0 ? en.width * 0.28 : -en.width * 0.28), cy - 2);
-  ctx.lineTo(cx + (en.dir >= 0 ? en.width * 0.5 : -en.width * 0.5), cy);
-  ctx.lineTo(cx + (en.dir >= 0 ? en.width * 0.28 : -en.width * 0.28), cy + 4);
-  ctx.closePath();
-  ctx.fill();
+  if (en.skin === 'mummy') {
+    ctx.strokeStyle = '#7a6845';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 3; i++) {
+      ctx.beginPath();
+      ctx.moveTo(sx + en.width * 0.05, en.y + en.height * (0.3 + i * 0.2));
+      ctx.lineTo(sx + en.width * 0.95, en.y + en.height * (0.22 + i * 0.2));
+      ctx.stroke();
+    }
+  } else {
+    ctx.fillStyle = palette.beak;
+    ctx.beginPath();
+    ctx.moveTo(cx + (en.dir >= 0 ? en.width * 0.28 : -en.width * 0.28), cy - 2);
+    ctx.lineTo(cx + (en.dir >= 0 ? en.width * 0.5 : -en.width * 0.5), cy);
+    ctx.lineTo(cx + (en.dir >= 0 ? en.width * 0.28 : -en.width * 0.28), cy + 4);
+    ctx.closePath();
+    ctx.fill();
+  }
 
-  ctx.fillStyle = 'black';
-  ctx.beginPath();
-  ctx.arc(cx + en.width * 0.1 * en.dir, cy - en.height * 0.18, 2.5, 0, Math.PI * 2);
-  ctx.fill();
+  if (en.skin === 'roadie') {
+    ctx.fillStyle = '#0a0a0c';
+    ctx.fillRect(sx + en.width * 0.14, en.y + en.height * 0.14, en.width * 0.72, en.height * 0.14);
+  } else {
+    ctx.fillStyle = 'black';
+    ctx.beginPath();
+    ctx.arc(cx + en.width * 0.1 * en.dir, cy - en.height * 0.18, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
 }
 
 function drawFan(sx, en, cx, cy, flashing) {
@@ -1703,30 +2146,50 @@ function drawFan(sx, en, cx, cy, flashing) {
   ctx.fillRect(sx + en.width * 0.67, en.y + en.height * 0.33, en.width * 0.1, en.width * 0.1);
 }
 
+const KEEPER_PALETTES = {
+  default: { c1: '#ffe066', c2: '#e8a200', head: '#f2c9a0', trim: '#3fae3f' },
+  anubisGuardian: { c1: '#2a2a2e', c2: '#0a0a0c', head: '#1a1a1c', trim: '#ffd43b' },
+  djBoss: { c1: '#5a2a8a', c2: '#1a0a3a', head: '#3a1a5a', trim: '#0cfaf0' },
+};
+
 function drawKeeper(sx, en, cx, cy, flashing) {
+  const palette = KEEPER_PALETTES[en.skin] || KEEPER_PALETTES.default;
   const bodyGrad = ctx.createLinearGradient(sx, en.y, sx, en.y + en.height);
   if (flashing) {
     bodyGrad.addColorStop(0, '#ffffff');
     bodyGrad.addColorStop(1, '#dddddd');
   } else {
-    bodyGrad.addColorStop(0, '#ffe066');
-    bodyGrad.addColorStop(1, '#e8a200');
+    bodyGrad.addColorStop(0, palette.c1);
+    bodyGrad.addColorStop(1, palette.c2);
   }
   ctx.fillStyle = bodyGrad;
   ctx.fillRect(sx + en.width * 0.15, en.y + en.height * 0.35, en.width * 0.7, en.height * 0.65);
 
-  ctx.fillStyle = flashing ? '#eee' : '#f2c9a0';
+  ctx.fillStyle = flashing ? '#eee' : palette.head;
   ctx.beginPath();
   ctx.arc(cx, en.y + en.height * 0.22, en.width * 0.22, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = '#3fae3f';
+  if (en.skin === 'anubisGuardian') {
+    ctx.fillStyle = '#0a0a0c';
+    ctx.beginPath();
+    ctx.moveTo(cx, en.y + en.height * 0.02);
+    ctx.lineTo(cx - en.width * 0.16, en.y + en.height * 0.22);
+    ctx.lineTo(cx - en.width * 0.05, en.y + en.height * 0.22);
+    ctx.closePath();
+    ctx.fill();
+  } else if (en.skin === 'djBoss') {
+    ctx.fillStyle = '#0a0a0c';
+    ctx.fillRect(cx - en.width * 0.24, en.y + en.height * 0.16, en.width * 0.48, en.width * 0.14);
+  }
+
+  ctx.fillStyle = palette.trim;
   ctx.beginPath();
   ctx.arc(sx + en.width * 0.05, en.y + en.height * 0.6, en.width * 0.16, 0, Math.PI * 2);
   ctx.arc(sx + en.width * 0.95, en.y + en.height * 0.6, en.width * 0.16, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = en.skin === 'djBoss' ? '#0cfaf0' : 'black';
   ctx.fillRect(cx - en.width * 0.1, en.y + en.height * 0.18, en.width * 0.06, en.width * 0.06);
   ctx.fillRect(cx + en.width * 0.04, en.y + en.height * 0.18, en.width * 0.06, en.width * 0.06);
 
@@ -1927,18 +2390,41 @@ function drawGoal() {
   ctx.ellipse(sx + 25, goal.y + 25 + bob, 3, 2, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  // florcita en la cabeza
-  ctx.fillStyle = '#ffe066';
-  for (let i = 0; i < 5; i++) {
-    const ang = (i / 5) * Math.PI * 2;
+  const accessory = level.theme.goalAccessory;
+  if (accessory === 'pharaoh') {
+    ctx.fillStyle = '#ffd43b';
     ctx.beginPath();
-    ctx.ellipse(sx + 36 + Math.cos(ang) * 4, goal.y - 2 + bob + Math.sin(ang) * 4, 3, 2, ang, 0, Math.PI * 2);
+    ctx.moveTo(sx + 10, goal.y - 2 + bob);
+    ctx.lineTo(sx + 40, goal.y - 2 + bob);
+    ctx.lineTo(sx + 34, goal.y + 6 + bob);
+    ctx.lineTo(sx + 16, goal.y + 6 + bob);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#1a3a8a';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(sx + 12, goal.y - 1 + bob); ctx.lineTo(sx + 12, goal.y + 8 + bob);
+    ctx.moveTo(sx + 38, goal.y - 1 + bob); ctx.lineTo(sx + 38, goal.y + 8 + bob);
+    ctx.stroke();
+  } else if (accessory === 'rockstar') {
+    ctx.fillStyle = '#0a0a0c';
+    ctx.fillRect(sx + 10, goal.y + 9 + bob, 12, 6);
+    ctx.fillRect(sx + 28, goal.y + 9 + bob, 12, 6);
+    ctx.fillRect(sx + 21, goal.y + 11 + bob, 8, 2);
+  } else {
+    // florcita en la cabeza
+    ctx.fillStyle = '#ffe066';
+    for (let i = 0; i < 5; i++) {
+      const ang = (i / 5) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.ellipse(sx + 36 + Math.cos(ang) * 4, goal.y - 2 + bob + Math.sin(ang) * 4, 3, 2, ang, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.fillStyle = '#e8890b';
+    ctx.beginPath();
+    ctx.arc(sx + 36, goal.y - 2 + bob, 2.5, 0, Math.PI * 2);
     ctx.fill();
   }
-  ctx.fillStyle = '#e8890b';
-  ctx.beginPath();
-  ctx.arc(sx + 36, goal.y - 2 + bob, 2.5, 0, Math.PI * 2);
-  ctx.fill();
 
   ctx.fillStyle = '#ffd43b';
   ctx.font = '18px sans-serif';
@@ -1963,6 +2449,10 @@ function drawPlayer() {
     drawPlayerDucking(sx, sy, charDef);
   } else {
     drawPlayerStanding(sx, sy, charDef);
+  }
+
+  if (player.hasSkateboard) {
+    drawSkateboardIcon(sx - 3, sy + player.height - 8, player.width + 6, 12, false);
   }
 }
 
@@ -2117,6 +2607,7 @@ function draw() {
   drawRollingHazards();
   drawPlatforms();
   drawChocolates();
+  drawSkateboards();
   drawHints();
   drawEnemies();
   drawPlayerProjectiles();
