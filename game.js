@@ -563,6 +563,18 @@ function resetPlayer(keepInvuln = true) {
 
 function loseLife() {
   if (player.invulnerable > 0) return;
+  loseLifeNow();
+}
+
+// Caerse a un pozo siempre debe costar una vida y reubicar al jugador,
+// aunque tenga una invulnerabilidad breve activa de un golpe anterior
+// (si no, se queda cayendo fuera de pantalla sin reaccionar hasta que
+// esa invulnerabilidad expire, lo que parecía "no perder vida").
+function fallIntoVoid() {
+  loseLifeNow();
+}
+
+function loseLifeNow() {
   player.lives -= 1;
   updateHUD();
   sfx.hit();
@@ -906,7 +918,7 @@ function update() {
 
   // Caída al vacío
   if (player.y > canvas.height + 100) {
-    loseLife();
+    fallIntoVoid();
   }
 
   // Pájaros: si Bauti vuela mucho rato, empiezan a pasar y a atacar
